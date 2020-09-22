@@ -1,0 +1,17 @@
+name: Comic Book Api Build
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build & Push Image
+        run: |
+          echo "${{ secrets.DOCKERPW }}" | docker login -u "mauriziolupini" --password-stdin
+          docker image build -t mauriziolupini/comic-book-api:dev1.0 .
+          docker push mauriziolupini/comic-book-api:dev1.0
